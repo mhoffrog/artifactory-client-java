@@ -1,5 +1,6 @@
 name: Tests
 on:
+  workflow_dispatch:
   push:
     branches:
       - '**'
@@ -19,10 +20,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu, windows, macOS ]
-        include:
-          - os: windows
-            gradlewSuffix: .bat
+        #os: [ ubuntu, windows, macOS ]
+        os: [ ubuntu ]
+        #include:
+        #  - os: windows
+        #    gradlewSuffix: .bat
     runs-on: ${{ matrix.os }}-latest
     steps:
       - name: Checkout code
@@ -31,12 +33,14 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Setup Go with cache
-        uses: jfrog/.github/actions/install-go-with-cache@main
+        uses: GHCICD/jfrog.github/actions/install-go-with-cache@feature/oss
 
       - name: Install local Artifactory
-        uses: jfrog/.github/actions/install-local-artifactory@main
+        uses: GHCICD/jfrog.github/actions/install-local-artifactory@feature/oss
         with:
-          RTLIC: ${{ secrets.RTLIC }}
+          #RTLIC: ${{ secrets.RTLIC }}
+          RTLIC: "oss"
+          RT_SETUP_VERSION: "a0fdfc64b42de0c89866ac4249e1eb6e28a4dec4"
 
       - name: Install Java
         uses: actions/setup-java@v4
