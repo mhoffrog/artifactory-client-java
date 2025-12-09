@@ -9,6 +9,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.jfrog.artifactory.client.annotation.ArtifactoryProFeature;
 import org.jfrog.artifactory.client.model.LocalRepository;
 import org.jfrog.artifactory.client.model.RemoteRepository;
 import org.jfrog.artifactory.client.model.Repository;
@@ -16,6 +17,7 @@ import org.jfrog.artifactory.client.model.VirtualRepository;
 import org.jfrog.artifactory.client.model.repository.settings.impl.MavenRepositorySettingsImpl;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,6 +38,8 @@ import static org.apache.commons.lang3.StringUtils.remove;
  * @author jbaruch
  * @since 30/07/12
  */
+@Listeners(SkipProTestAnalyzer.class)
+@ArtifactoryProFeature
 public abstract class ArtifactoryTestsBase {
     protected static final String PATH = "m/a/b/c.txt";
     protected static final String PATH_PROPS = "m/a/b/p.txt";
