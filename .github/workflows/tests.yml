@@ -15,16 +15,16 @@ concurrency:
   cancel-in-progress: true
 jobs:
   Tests:
-    if: contains(github.event.pull_request.labels.*.name, 'safe to test') || github.event_name == 'push'
+    if: contains(github.event.pull_request.labels.*.name, 'safe to test') || github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     name: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        #os: [ ubuntu, windows, macOS ]
-        os: [ ubuntu ]
-        #include:
-        #  - os: windows
-        #    gradlewSuffix: .bat
+        os: [ ubuntu, windows, macOS ]
+        #os: [ ubuntu ]
+        include:
+          - os: windows
+            gradlewSuffix: .bat
     runs-on: ${{ matrix.os }}-latest
     steps:
       - name: Checkout code
